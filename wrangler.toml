@@ -1,0 +1,7 @@
+name = "holo-schedule-workers-dev"
+type = "webpack"
+account_id = ""
+workers_dev = true
+
+[env.production]
+name = "holo-schedule-workers"

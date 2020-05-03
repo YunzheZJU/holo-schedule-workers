@@ -1,0 +1,8 @@
+.idea/
+.yarn/
+node_modules/
+dist/
+worker/
+
+.yarnrc
+wrangler.toml
