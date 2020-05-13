@@ -1,3 +1,48 @@
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request))
+})
+
+/**
+ * Respond to the request
+ * @param {Request} request
+ */
+async function handleRequest(request) {
+  try {
+    // ['UC-1A', 'UC-2B']
+    let channels = (new URL(request.url)).searchParams.getAll('channels')
+
+    channels = channels.length ? channels : defaultChannels
+
+    const result = Object.fromEntries(await Promise.all(
+      channels.map(
+        async (channel) => ([
+          channel, {
+            living: await fetch(
+              `https://m.youtube.com/channel/${channel}/videos?view=2&flow=list&pbj=1`,
+              init,
+            ).then(response => response.text()).then(
+              data => [...data.matchAll(/\d watching.*?"videoId":"([^"]+)"/g)].map(
+                ([, group]) => group,
+              ),
+            ),
+          },
+        ]),
+      ),
+    ))
+
+    return new Response(JSON.stringify(result), {
+      headers: {
+        'content-type': type,
+        'cache-control': 'no-cache',
+        'x-cache-time': new Date(),
+      },
+    })
+  } catch (err) {
+    // Display the error stack.
+    return new Response(err.stack || err)
+  }
+}
+
 const type = 'application/json;charset=UTF-8'
 
 const init = {
@@ -16,73 +61,4 @@ const init = {
   },
 }
 
-const channelInfos = {
-  'UCSJ4gkVC6NrvII8umztf0Ow': {
-    name: 'ChilledCow',
-    description: 'Multiple live streams always available',
-  },
-  'UC-hM6YJuNYVAmUWxeIr9FeA': {
-    name: 'Miko Ch. さくらみこ',
-    description: 'Miko\'s ELITE channel',
-  },
-  'UCCzUftO8KOVkV4wQG1vkUvg': {
-    name: 'Marine Ch. 宝鐘マリン',
-    description: 'Test channel 1',
-  },
-  'UC1opHUrw8rvnsadT-iGp7Cg': {
-    name: 'Aqua Ch. 湊あくあ',
-    description: 'Test channel 2',
-  },
-  'UCdn5BQ06XqgXoAxIhbqw5Rg': {
-    name: 'フブキCh。白上フブキ',
-    description: 'Test channel 3',
-  },
-}
-
-const regex = /\d watching.*?"videoId":"([^"]+)"/g
-
-const handleRequest = async (event) => {
-  try {
-    const cache = caches.default
-    const cacheUrl = new URL(event.request.url)
-
-    let response = await cache.match(cacheUrl)
-
-    if (!response) {
-      const jsonStrings = await Promise.all(
-        Object.entries(channelInfos).map(
-          async ([channelId]) => ({
-            channelId,
-            jsonString: await fetch(
-              `https://m.youtube.com/channel/${channelId}/videos?view=2&flow=list&pbj=1`,
-              init,
-            ).then(response => response.text()),
-          }),
-        ),
-      )
-      const result = Object.fromEntries(
-        jsonStrings.map(({ channelId, jsonString }) => {
-          const vids = [...jsonString.matchAll(regex)].map(([, group]) => group)
-
-          return [channelId, { ...channelInfos[channelId], vids }]
-        }),
-      )
-
-      response = new Response(JSON.stringify(result), {
-        headers: {
-          'content-type': type,
-          'cache-control': 'no-cache',
-          'x-cache-time': new Date(),
-        }
-      })
-
-      event.waitUntil(cache.put(cacheUrl, response.clone()))
-    }
-    return response
-  } catch (err) {
-    // Display the error stack.
-    return new Response(err.stack || err)
-  }
-}
-
-addEventListener('fetch', event => event.respondWith(handleRequest(event)))
+const defaultChannels = ['UC-1A', 'UC1opHUrw8rvnsadT-iGp7Cg', 'UC1DCedRgGHBdm81E1llLhOQ', 'UCSJ4gkVC6NrvII8umztf0Ow']
