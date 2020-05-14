@@ -13,30 +13,45 @@ async function handleRequest(request) {
 
     channels = channels.length ? channels : defaultChannels
 
-    const result = Object.fromEntries(await Promise.all(
-      channels.map(
-        async (channel) => ([
-          channel, {
-            living: Object.fromEntries(await fetch(
-              `https://m.youtube.com/channel/${channel}/videos?view=2&flow=list&pbj=1`,
-              init,
-            ).then(response => response.text()).then(
-              data => [...data.matchAll(regex)].map(
-                ([, title, room]) => [room, {title, start_at: 'Time'}],
-              ),
-            )),
-          },
-        ]),
-      ),
-    ))
+    return await Promise.all(channels.map(async channel => {
+      const liveInfos = await fetch(
+        `https://m.youtube.com/channel/${channel}/videos?view=2&flow=list&pbj=1`,
+        init,
+      ).then(
+        response => response.text(),
+      ).then(
+        data => data.split('compactVideoRenderer'),
+      ).then(
+        fragments => fragments.map(fragment => {
+          const isLiving = regex_living.exec(fragment)
+          const isScheduled = regex_scheduled.exec(fragment)
 
-    return new Response(JSON.stringify(result), {
-      headers: {
-        'content-type': type,
-        'cache-control': 'no-cache',
-        'x-cache-time': new Date(),
-      },
-    })
+          if (!(isLiving || isScheduled)) return
+
+          const title = regex_title.exec(fragment)
+          const room = regex_room.exec(fragment)
+
+          return [room[1], {
+            title: title[1],
+            ...(isScheduled ? { startAt: Number(isScheduled[1]) } : {})
+          }]
+        }),
+      ).then(entries => entries.filter(entry => entry))
+
+      return [channel, Object.fromEntries(liveInfos)]
+    })).then(
+      Object.fromEntries
+    ).then(
+      JSON.stringify
+    ).then(
+      body => new Response(body, {
+        headers: {
+          'content-type': type,
+          'cache-control': 'no-cache',
+          'x-cache-time': String(new Date()),
+        },
+      })
+    )
   } catch (err) {
     // Display the error stack.
     return new Response(err.stack || err)
@@ -63,4 +78,7 @@ const init = {
 
 const defaultChannels = ['UC-1A', 'UC1opHUrw8rvnsadT-iGp7Cg', 'UC1DCedRgGHBdm81E1llLhOQ', 'UCdn5BQ06XqgXoAxIhbqw5Rg', 'UCSJ4gkVC6NrvII8umztf0Ow']
 
-const regex = /"title":{"runs":\[{"text":"([^"]+).*?\d watching.*?"videoId":"([^"]+)"/g
+const regex_title = /"title":{"runs":\[{"text":"([^"]+)/
+const regex_room = /"videoId":"([^"]+)/
+const regex_scheduled = /"startTime":"(\d+)/
+const regex_living = /watching/
