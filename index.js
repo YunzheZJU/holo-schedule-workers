@@ -61,6 +61,6 @@ const init = {
   },
 }
 
-const defaultChannels = ['UC-1A', 'UC1opHUrw8rvnsadT-iGp7Cg', 'UC1DCedRgGHBdm81E1llLhOQ', 'UCSJ4gkVC6NrvII8umztf0Ow']
+const defaultChannels = ['UC-1A', 'UC1opHUrw8rvnsadT-iGp7Cg', 'UC1DCedRgGHBdm81E1llLhOQ', 'UCdn5BQ06XqgXoAxIhbqw5Rg', 'UCSJ4gkVC6NrvII8umztf0Ow']
 
 const regex = /"title":{"runs":\[{"text":"([^"]+).*?\d watching.*?"videoId":"([^"]+)"/g
