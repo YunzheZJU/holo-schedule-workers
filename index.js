@@ -17,14 +17,14 @@ async function handleRequest(request) {
       channels.map(
         async (channel) => ([
           channel, {
-            living: await fetch(
+            living: Object.fromEntries(await fetch(
               `https://m.youtube.com/channel/${channel}/videos?view=2&flow=list&pbj=1`,
               init,
             ).then(response => response.text()).then(
-              data => [...data.matchAll(/\d watching.*?"videoId":"([^"]+)"/g)].map(
-                ([, group]) => group,
+              data => [...data.matchAll(regex)].map(
+                ([, title, room]) => [room, {title, start_at: 'Time'}],
               ),
-            ),
+            )),
           },
         ]),
       ),
@@ -62,3 +62,5 @@ const init = {
 }
 
 const defaultChannels = ['UC-1A', 'UC1opHUrw8rvnsadT-iGp7Cg', 'UC1DCedRgGHBdm81E1llLhOQ', 'UCSJ4gkVC6NrvII8umztf0Ow']
+
+const regex = /"title":{"runs":\[{"text":"([^"]+).*?\d watching.*?"videoId":"([^"]+)"/g
