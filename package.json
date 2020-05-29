@@ -2,13 +2,16 @@
   "name": "holo-schedule-workers",
   "version": "0.1.0",
   "description": "Serverless workers for holo-schedule.",
-  "main": "index.js",
+  "main": "src/index.js",
   "repository": "https://github.com/YunzheZJU/holo-schedule-workers",
   "author": "Yunzhe <yunzhe@zju.edu.cn>",
   "license": "MIT",
   "scripts": {
+    "configure": "yarn node scripts/configure.js",
     "start": "wrangler preview --watch",
-    "publish": "wrangler publish --env production",
+    "publish": "node scripts/publish.js",
+    "publish:all": "node scripts/publish-all.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-  }
+  },
+  "dependencies": {}
 }
