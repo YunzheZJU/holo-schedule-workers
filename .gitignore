@@ -5,4 +5,4 @@ dist/
 worker/
 
 .yarnrc
-wrangler.toml
+packages/**/wrangler.toml

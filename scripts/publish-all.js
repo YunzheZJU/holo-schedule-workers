@@ -1,17 +1,18 @@
-const { configure, question, publish, WRANGLER_CONFIG_PATH, testFile } = require('./shared')
-const workers = require('../workers.json')
+const { configure, publish } = require('./shared')
+
+const publishConfig = require('../publish.json')
 
 const publishAll = async () => {
-  const fileExists = await testFile(WRANGLER_CONFIG_PATH)
+  const packages = process.argv[2] ? [process.argv[2]] : Object.keys(publishConfig)
 
-  if (fileExists) {
-    await question()
-  }
+  for (let packageName of packages) {
+    process.chdir(`packages/${packageName}`)
 
-  for (let worker of workers) {
-    console.log(`Publishing to ${worker}...`)
-    await configure(worker)
-    await publish()
+    for (let worker of publishConfig[packageName]) {
+      console.log(`Publishing ${packageName} to ${worker}...`)
+      await configure(worker)
+      await publish()
+    }
   }
 }
 

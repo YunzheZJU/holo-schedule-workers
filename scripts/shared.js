@@ -5,7 +5,7 @@ const { spawn } = require('child_process')
 
 const fsPromises = fs.promises
 
-const WRANGLER_CONFIG_PATH = path.resolve(__dirname, '..', 'wrangler.toml')
+const WRANGLER_CONFIG_PATH = 'wrangler.toml'
 const getWranglerConfig = (workerName) => `name = "${workerName || 'worker'}"
 type = "webpack"
 workers_dev = true
@@ -17,7 +17,8 @@ const question = () => new Promise((resolve, reject) => {
     output: process.stdout,
   })
 
-  rl.question('File already exists! wrangler.toml will be overwritten. Continue? [Y/N]\n', (answer) => {
+  rl.question(`File already exists! ${path.join(process.cwd(), WRANGLER_CONFIG_PATH)} will be overwritten. Continue? [Y/N]
+`, (answer) => {
     if (answer.toUpperCase() !== 'Y') {
       reject(new Error('Aborted'))
     }

@@ -1,12 +1,8 @@
-const { configure, question, WRANGLER_CONFIG_PATH, testFile } = require('./shared')
+const { configure } = require('./shared')
 
-testFile(WRANGLER_CONFIG_PATH).then(
-  fileExists => {
-    if (fileExists) return question()
-  },
-).then(
-  () => configure(process.argv[2]),
-).catch(
+process.chdir(`packages/${process.argv[2]}`)
+
+configure(process.argv[3]).catch(
   (err) => console.error(err),
 ).then(
   () => process.exit(0),
