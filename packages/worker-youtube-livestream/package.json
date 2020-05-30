@@ -11,6 +11,8 @@
     "start": "wrangler preview --watch",
     "publish": "cd ../.. && yarn run publish worker-youtube-livestream",
     "publish:all": "cd ../.. && yarn run publish:package worker-youtube-livestream",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "cd ../.. && yarn run lint packages/worker-youtube-livestream",
+    "lint:fix": "yarn lint --fix"
   }
 }

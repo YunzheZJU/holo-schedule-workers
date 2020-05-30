@@ -1,9 +1,11 @@
-const { configure } = require('./shared')
+const { configure, switchPackage } = require('./shared')
 
-process.chdir(`packages/${process.argv[2]}`)
+switchPackage(process.argv[2])
 
-configure(process.argv[3]).catch(
-  (err) => console.error(err),
-).then(
-  () => process.exit(0),
-)
+configure(process.argv[3])
+  .catch(
+    err => console.error(err),
+  )
+  .then(
+    () => process.exit(0),
+  )

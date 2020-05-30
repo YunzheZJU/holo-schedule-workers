@@ -11,9 +11,15 @@
     "publish": "node scripts/publish.js",
     "publish:package": "node scripts/publish-all.js",
     "publish:all": "lerna run publish:all",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "yarn eslint",
+    "lint:all": "yarn run lint scripts && lerna run lint",
+    "lint:all:fix": "yarn run lint scripts --fix && lerna run lint:fix"
   },
   "devDependencies": {
+    "eslint": "6.8.0",
+    "eslint-config-airbnb-base": "14.1.0",
+    "eslint-plugin-import": "2.20.1",
     "lerna": "^3.22.0"
   }
 }
