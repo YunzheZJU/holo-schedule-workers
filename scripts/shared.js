@@ -47,6 +47,7 @@ const testFile = file => fsPromises
 const configure = async workerName => fsPromises
   .writeFile(WRANGLER_CONFIG_PATH, getWranglerConfig(workerName))
 
+// TODO: Retry
 const publish = () => new Promise(
   (resolve, reject) => {
     const wrangler = spawn('wrangler', ['publish'], { shell: true })
@@ -60,8 +61,13 @@ const publish = () => new Promise(
     })
 
     wrangler.on('close', code => {
-      console.log(`[wrangler] Exited with code ${code}`)
-      resolve()
+      const message = `[wrangler] Exited with code ${code}`
+      if (code === 0) {
+        console.log(message)
+        resolve()
+      } else {
+        reject(new Error(message))
+      }
     })
 
     wrangler.on('error', err => {
