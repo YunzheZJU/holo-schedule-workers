@@ -1,0 +1,18 @@
+{
+  "name": "worker-bilibili-room-static-info",
+  "version": "1.0.0",
+  "description": "Extracting active and scheduled live streams from youtube.",
+  "repository": "https://github.com/YunzheZJU/holo-schedule-workers",
+  "main": "src/index.js",
+  "author": "Yunzhe <yunzhe@zju.edu.cn>",
+  "license": "MIT",
+  "scripts": {
+    "configure": "cd ../.. && yarn run configure worker-bilibili-room-static-info",
+    "start": "wrangler preview --watch",
+    "publish": "cd ../.. && yarn run publish worker-bilibili-room-static-info",
+    "publish:all": "cd ../.. && yarn run publish:package worker-bilibili-room-static-info",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "cd ../.. && yarn run lint packages/worker-bilibili-room-static-info",
+    "lint:fix": "yarn lint --fix"
+  }
+}
