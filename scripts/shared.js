@@ -47,8 +47,7 @@ const testFile = file => fsPromises
 const configure = async workerName => fsPromises
   .writeFile(WRANGLER_CONFIG_PATH, getWranglerConfig(workerName))
 
-// TODO: Retry
-const publish = () => new Promise(
+const wranglerPublish = () => new Promise(
   (resolve, reject) => {
     const wrangler = spawn('wrangler', ['publish'], { shell: true })
 
@@ -76,6 +75,17 @@ const publish = () => new Promise(
     })
   },
 )
+
+const MAX_RETRIES = 3
+// This creates: wranglerPublish().catch(retryFn).catch(retryFn).catch(retryFn)
+const publish = () => new Array(MAX_RETRIES)
+  .fill(wranglerPublish)
+  .reduce((prev, current, index) => prev.catch(err => {
+    console.log(`An error has occurred: ${err}
+(${index + 1}/${MAX_RETRIES})Retrying...
+`)
+    return current()
+  }), wranglerPublish())
 
 const switchPackage = packageName => process.chdir(
   path.join(__dirname, '..', 'packages', packageName),
