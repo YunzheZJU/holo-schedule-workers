@@ -10,11 +10,11 @@
     "configure": "node scripts/configure.js",
     "publish": "node scripts/publish.js",
     "publish:package": "node scripts/publish-all.js",
-    "publish:all": "lerna run publish:all",
+    "publish:all": "lerna run publish:all --stream",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "yarn eslint",
-    "lint:all": "yarn run lint scripts && lerna run lint",
-    "lint:all:fix": "yarn run lint scripts --fix && lerna run lint:fix"
+    "lint:all": "yarn run lint scripts && lerna run lint --stream",
+    "lint:all:fix": "yarn run lint scripts --fix && lerna run lint:fix --stream"
   },
   "devDependencies": {
     "eslint": "6.8.0",
