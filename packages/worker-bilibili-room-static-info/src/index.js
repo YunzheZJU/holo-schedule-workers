@@ -28,7 +28,7 @@ async function handleRequest(request) {
     channels = channels.length ? channels : defaultChannels
 
     return await Promise.all(channels.map(async channel => {
-      const { code, data: { live_status: status, live_time: startAt, title } } = await fetch(
+      const { code, data: { live_status: status, title } } = await fetch(
         `https://api.live.bilibili.com/room/v1/RoomStatic/get_room_static_info?room_id=${channel}`,
         init,
       )
@@ -37,7 +37,7 @@ async function handleRequest(request) {
         )
 
       if (code === 0 && status === 1) {
-        return [channel, { title, startAt: (new Date(startAt)).toISOString() }]
+        return [channel, { [channel]: { title } }]
       }
 
       return [channel, {}]
