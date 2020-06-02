@@ -1,0 +1,18 @@
+{
+  "name": "worker-youtube-all-videos",
+  "version": "1.0.0",
+  "description": "Extracting active and scheduled live streams from youtube.",
+  "repository": "https://github.com/YunzheZJU/holo-schedule-workers",
+  "main": "src/index.js",
+  "author": "Yunzhe <yunzhe@zju.edu.cn>",
+  "license": "MIT",
+  "scripts": {
+    "configure": "cd ../.. && yarn run configure worker-youtube-all-videos",
+    "start": "wrangler preview --watch",
+    "publish": "cd ../.. && yarn run publish worker-youtube-all-videos",
+    "publish:all": "cd ../.. && yarn run publish:package worker-youtube-all-videos",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "cd ../.. && yarn run lint packages/worker-youtube-all-videos",
+    "lint:fix": "yarn lint --fix"
+  }
+}
