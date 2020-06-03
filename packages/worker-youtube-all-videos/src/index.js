@@ -21,7 +21,7 @@ const defaultChannels = ['UC-1A', 'UC1opHUrw8rvnsadT-iGp7Cg', 'UC1DCedRgGHBdm81E
 const regexTitle = /"title":{"runs":\[{"text":"([^"]+)/
 const regexRoom = /"videoId":"([^"]+)/
 const regexScheduled = /"startTime":"(\d+)/
-const regexLiving = /watching/
+const regexLiving = /" watching"/
 
 /**
  * Respond to the request
