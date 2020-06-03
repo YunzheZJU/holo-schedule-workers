@@ -33,7 +33,10 @@ async function handleRequest(request) {
         init,
       )
         .then(
-          response => response.json(),
+          response => {
+            if (response.ok) return response.json()
+            throw new Error('Network response was not ok')
+          },
         )
 
       if (code === 0 && status === 1) {

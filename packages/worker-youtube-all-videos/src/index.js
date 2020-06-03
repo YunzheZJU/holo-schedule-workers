@@ -40,7 +40,10 @@ async function handleRequest(request) {
         init,
       )
         .then(
-          response => response.text(),
+          response => {
+            if (response.ok) return response.text()
+            throw new Error('Network response was not ok')
+          },
         )
         .then(
           data => data.split('compactVideoRenderer'),
