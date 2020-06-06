@@ -14,5 +14,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "cd ../.. && yarn run lint packages/worker-bilibili-room-static-info",
     "lint:fix": "yarn lint --fix"
+  },
+  "dependencies": {
+    "@holo-schedule-workers/shared": "^0.1.0"
   }
 }
