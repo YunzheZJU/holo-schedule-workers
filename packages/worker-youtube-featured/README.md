@@ -15,6 +15,8 @@
 
 Extracting active and scheduled live streams from youtube.
 
+Results from this worker may contain a latency around 3 minutes, especially when a live is about to close.
+
 ## System Dependencies
 * [Yarn](https://classic.yarnpkg.com/en/docs/install)
 * [Wrangler](https://developers.cloudflare.com/workers/tooling/wrangler/install)
