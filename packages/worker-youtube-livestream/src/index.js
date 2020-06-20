@@ -44,6 +44,7 @@ const handleSubResponse = (data = '') => {
     // eslint-disable-next-line consistent-return
     liveInfos.push([room[1], {
       title: title[1],
+      cover: `https://img.youtube.com/vi/${room[1]}/mqdefault.jpg`,
       ...(isScheduled ? { startAt: Number(isScheduled[1]) } : {}),
     }])
   })
