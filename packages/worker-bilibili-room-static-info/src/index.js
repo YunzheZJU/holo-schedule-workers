@@ -17,10 +17,14 @@ const config = {
 }
 
 const handleSubResponse = (data = {}) => {
-  const { code, data: { live_status: status, title, roomid } } = data
+  const {
+    code, data: {
+      live_status: status, user_cover: cover, title, roomid,
+    },
+  } = data
 
   if (code === 0 && status === 1) {
-    return { [roomid]: { title } }
+    return { [roomid]: { title, cover } }
   }
 
   return {}

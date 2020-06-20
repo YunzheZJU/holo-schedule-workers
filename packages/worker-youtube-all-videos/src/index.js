@@ -29,7 +29,7 @@ const config = {
   defaultChannels,
 }
 
-const handleSubResponse = (data = '') => {
+const handleSubResponse = (data = '', channel = '') => {
   const liveInfos = []
 
   data.split('ideoRenderer').forEach(fragment => {
@@ -44,6 +44,7 @@ const handleSubResponse = (data = '') => {
     // eslint-disable-next-line consistent-return
     liveInfos.push([room[1], {
       title: title[1],
+      cover: `https://img.youtube.com/vi/${channel}/mqdefault.jpg`,
       ...(isScheduled ? { startAt: Number(isScheduled[1]) } : {}),
     }])
   })

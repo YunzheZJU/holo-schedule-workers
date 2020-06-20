@@ -33,7 +33,7 @@ const generate = (config = {
         throw new Error('Network response was not ok')
       }
 
-      return [channel, onSubResponse(await response[responseType]())]
+      return [channel, onSubResponse(await response[responseType](), channel)]
     }))
       .then(
         Object.fromEntries,
