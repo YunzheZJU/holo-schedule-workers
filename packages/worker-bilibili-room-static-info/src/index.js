@@ -10,24 +10,32 @@ const headers = {
 const defaultChannels = ['123', '13946381', '21584153']
 
 const config = {
-  getRequestUrl: channel => `https://api.live.bilibili.com/room/v1/RoomStatic/get_room_static_info?room_id=${channel}`,
+  getRequestUrl: channel => `https://api.live.bilibili.com/xlive/web-room/v1/index/getH5InfoByRoom?room_id=${channel}`,
   requestHeaders: headers,
   responseType: 'json',
   defaultChannels,
 }
 
 const handleSubResponse = (data = {}) => {
+  const { code } = data
+
+  if (code !== 0) {
+    return {}
+  }
+
   const {
-    code, data: {
-      live_status: status, user_cover: cover, title, roomid,
+    data: {
+      room_info: {
+        live_status: status, cover, title, room_id: roomId,
+      },
     },
   } = data
 
-  if (code === 0 && status === 1) {
-    return { [roomid]: { title, cover } }
+  if (status !== 1) {
+    return {}
   }
 
-  return {}
+  return { [roomId]: { title, cover } }
 }
 
 const handleRequest = generate(config, handleSubResponse)
