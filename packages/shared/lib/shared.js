@@ -10,13 +10,15 @@ const generate = (config = {
   getRequestUrl: () => {
     throw new Error('No url is specified.')
   },
+  getPostBody: () => undefined,
+  method: 'GET',
   requestHeaders: {},
   responseType: 'text',
   defaultChannels: [],
 }, onSubResponse) => async request => {
   try {
     const {
-      getRequestUrl, requestHeaders: headers, responseType, defaultChannels,
+      getRequestUrl, getPostBody, method, requestHeaders: headers, responseType, defaultChannels,
     } = config
     // ['UC-1A', 'UC-2B']
     let channels = (new URL(request.url)).searchParams.getAll('channels')
@@ -26,14 +28,18 @@ const generate = (config = {
     return await Promise.all(channels.map(async channel => {
       const response = await fetch(
         getRequestUrl(channel),
-        { headers: { ...defaultHeaders, ...headers } },
+        {
+          headers: { ...defaultHeaders, ...headers },
+          method,
+          body: method === 'POST' ? getPostBody(channel) : undefined,
+        },
       )
 
       if (!response.ok) {
         throw new Error('Network response was not ok')
       }
 
-      return [channel, onSubResponse(await response[responseType]())]
+      return [channel, onSubResponse(await response[responseType](), channel)]
     }))
       .then(
         Object.fromEntries,
