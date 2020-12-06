@@ -34,9 +34,9 @@ const config = {
 
 const handleSubResponse = (data = [], channel) => {
   try {
-    const { lastBroadcast, stream } = data[0].data
-    const { id: streamId } = stream
-    const { id: lastBroadcastId, title } = lastBroadcast
+    const {
+      lastBroadcast: { id: lastBroadcastId, title }, stream: { id: streamId },
+    } = data[0].data.user
 
     if (streamId !== lastBroadcastId) {
       return {}
