@@ -1,7 +1,7 @@
 {
   "name": "worker-bilibili-room-static-info",
   "version": "1.0.0",
-  "description": "Extracting active and scheduled live streams from youtube.",
+  "description": "Extracting active live streams from bilibili.",
   "repository": "https://github.com/YunzheZJU/holo-schedule-workers",
   "main": "src/index.js",
   "author": "Yunzhe <yunzhe@zju.edu.cn>",
