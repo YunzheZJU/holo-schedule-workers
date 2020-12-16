@@ -15,7 +15,6 @@ const regexScheduled = /"startTime":"(\d+)/
 const regexLiving = /" watching"/
 
 const defaultChannels = [
-  'UC-1A',
   'UC1opHUrw8rvnsadT-iGp7Cg',
   'UC1DCedRgGHBdm81E1llLhOQ',
   'UCdn5BQ06XqgXoAxIhbqw5Rg',
