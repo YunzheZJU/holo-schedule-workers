@@ -9,7 +9,7 @@ const headers = {
   'x-youTube-client-version': '2.20200410',
 }
 
-const regexTitle = /"title":{"runs":\[{"text":"([^"]+)/
+const regexTitle = /"title":{"runs":\[{"text":"(.*?)(?<!\\)"/
 const regexRoom = /"videoId":"([^"]+)/
 const regexScheduled = /"startTime":"(\d+)/
 const regexLiving = /" watching"/
