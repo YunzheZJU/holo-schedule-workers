@@ -28,11 +28,11 @@ const config = {
 ]`,
   method: 'POST',
   requestHeaders: headers,
-  responseType: 'json',
+  responseType: 'text',
   defaultChannels,
 }
 
-const handleSubResponse = (data = [], channel) => {
+const handleSubResponse = (data = '', channel) => {
   const liveInfo = {}
   try {
     const { lastBroadcast, stream } = JSON.parse(data)[0].data.user

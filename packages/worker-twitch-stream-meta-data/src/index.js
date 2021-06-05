@@ -28,15 +28,15 @@ const config = {
 ]`,
   method: 'POST',
   requestHeaders: headers,
-  responseType: 'json',
+  responseType: 'text',
   defaultChannels,
 }
 
-const handleSubResponse = (data = [], channel) => {
+const handleSubResponse = (data = '', channel) => {
   try {
     const {
       lastBroadcast: { id: lastBroadcastId, title }, stream: { id: streamId },
-    } = data[0].data.user
+    } = JSON.parse(data)[0].data.user
 
     if (streamId !== lastBroadcastId) {
       return {}
