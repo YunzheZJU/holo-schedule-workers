@@ -1,0 +1,21 @@
+{
+  "name": "worker-twitch-stream-meta-data-check",
+  "version": "1.0.0",
+  "description": "Check the status of live streams from twitch.",
+  "repository": "https://github.com/YunzheZJU/holo-schedule-workers",
+  "main": "src/index.js",
+  "author": "Yunzhe <yunzhe@zju.edu.cn>",
+  "license": "MIT",
+  "scripts": {
+    "configure": "cd ../.. && yarn run configure worker-twitch-stream-meta-data-check",
+    "start": "wrangler preview --watch",
+    "publish": "cd ../.. && yarn run publish worker-twitch-stream-meta-data-check",
+    "publish:all": "cd ../.. && yarn run publish:package worker-twitch-stream-meta-data-check",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "cd ../.. && yarn run lint packages/worker-twitch-stream-meta-data-check",
+    "lint:fix": "yarn lint --fix"
+  },
+  "dependencies": {
+    "@holo-schedule-workers/shared": "^0.1.0"
+  }
+}
