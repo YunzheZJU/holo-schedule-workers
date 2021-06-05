@@ -1,0 +1,21 @@
+{
+  "name": "worker-youtube-updated-metadata",
+  "version": "1.0.0",
+  "description": "Check the status of live streams from youtube.",
+  "repository": "https://github.com/YunzheZJU/holo-schedule-workers",
+  "main": "src/index.js",
+  "author": "Yunzhe <yunzhe@zju.edu.cn>",
+  "license": "MIT",
+  "scripts": {
+    "configure": "cd ../.. && yarn run configure worker-youtube-updated-metadata",
+    "start": "wrangler preview --watch",
+    "publish": "cd ../.. && yarn run publish worker-youtube-updated-metadata",
+    "publish:all": "cd ../.. && yarn run publish:package worker-youtube-updated-metadata",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "cd ../.. && yarn run lint packages/worker-youtube-updated-metadata",
+    "lint:fix": "yarn lint --fix"
+  },
+  "dependencies": {
+    "@holo-schedule-workers/shared": "^0.1.0"
+  }
+}
