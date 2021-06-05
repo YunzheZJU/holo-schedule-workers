@@ -13,7 +13,7 @@
 
 ## Introduction
 
-Extracting active live streams from bilibili.
+Extracting active live streams from twitch.
 
 ## System Dependencies
 * [Yarn](https://classic.yarnpkg.com/en/docs/install)
