@@ -65,14 +65,14 @@ const handleSubResponse = (data = '', videoId) => {
     liveInfo.cover = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`
 
     if (updateViewershipAction) {
-      const viewCountText = updateViewershipAction?.viewCount?.videoViewCountRenderer?.viewCount?.simpleText || ''
+      const viewCountText = updateViewershipAction?.viewCount?.videoViewCountRenderer?.viewCount?.simpleText
 
       if (/Aktuell/.test(viewCountText)) {
-        const likeCountText = updateToggleButtonTextAction?.defaultText?.simpleText || ''
+        const likeCountText = updateToggleButtonTextAction?.[0]?.defaultText?.simpleText
 
         liveInfo.status = 'living'
-        liveInfo.watching = Number(viewCountText.replace(/\D/g, ''))
-        liveInfo.like = Number(likeCountText.replace(/\D/g, ''))
+        liveInfo.watching = viewCountText ? Number(viewCountText.replace(/\D/g, '')) : null
+        liveInfo.like = likeCountText ? Number(likeCountText.replace(/\D/g, '')) : null
       } else {
         liveInfo.status = 'scheduled'
       }
