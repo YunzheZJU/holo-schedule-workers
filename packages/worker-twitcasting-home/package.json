@@ -1,0 +1,21 @@
+{
+  "name": "worker-twitcasting-home",
+  "version": "1.0.0",
+  "description": "Extracting active live streams from twitcasting.",
+  "repository": "https://github.com/YunzheZJU/holo-schedule-workers",
+  "main": "src/index.js",
+  "author": "Yunzhe <yunzhe@zju.edu.cn>",
+  "license": "MIT",
+  "scripts": {
+    "configure": "cd ../.. && yarn run configure worker-twitcasting-home",
+    "start": "wrangler preview --watch",
+    "publish": "cd ../.. && yarn run publish worker-twitcasting-home",
+    "publish:all": "cd ../.. && yarn run publish:package worker-twitcasting-home",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "cd ../.. && yarn run lint packages/worker-twitcasting-home",
+    "lint:fix": "yarn lint --fix"
+  },
+  "dependencies": {
+    "@holo-schedule-workers/shared": "^0.1.0"
+  }
+}
